@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Byte-compiled
+*.egg-info/
+
+# Media uploads
+/media/
+/uploads/
+
+# Environment
+.env
+.env.*
+
+# Git
+.git
+.gitignore

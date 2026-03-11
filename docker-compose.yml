@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    container_name: support-bot-backend
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./media:/app/media
+    ports:
+      - "8080:8080"
