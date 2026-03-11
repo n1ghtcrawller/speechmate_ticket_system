@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from middleware.logging import log_requests
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, async_engine, init_db
-from api import auth, users, hub, support
+from api import auth, users, hub, support, dify_webhook
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from services.bot import start_bot_polling
@@ -140,3 +140,4 @@ app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(hub.router, prefix="/hub-api", tags=["hub"])
 app.include_router(support.router, prefix="/support", tags=["support"])
+app.include_router(dify_webhook.router, prefix="/dify", tags=["dify"])

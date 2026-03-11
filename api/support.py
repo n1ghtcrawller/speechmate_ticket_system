@@ -6,6 +6,7 @@ from utils.dependencies import get_current_user, get_admin_user
 from models import models, schemas
 from crud import support_crud
 from services.bot import bot
+from services.dify_service import notify_ticket_created, notify_new_message
 
 
 router = APIRouter()
@@ -27,15 +28,18 @@ async def create_support_request(
         hub_id=payload.hub_id,
         badge_id=payload.badge_id,
         description=payload.description,
+        status=payload.status or "open",
     )
     # создаём первое сообщение в треде
-    await support_crud.add_support_message(
+    first_message = await support_crud.add_support_message(
         db=db,
         request_id=request.id,
         sender_id=current_user.id,
         sender_is_admin=current_user.is_admin,
         body=payload.description,
     )
+    # отправляем полный контекст в Dify
+    await notify_ticket_created(db=db, request=request, user=current_user)
     return request
 
 
@@ -109,6 +113,9 @@ async def post_support_message(
                 bot.send_message(req.user.telegram_id, text)
             except Exception:
                 pass
+
+    # отправляем обновлённый контекст в Dify
+    await notify_new_message(db=db, request=req, message=message, user=current_user)
 
     return message
 

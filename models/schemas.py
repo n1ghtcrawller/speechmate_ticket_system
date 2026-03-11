@@ -47,6 +47,7 @@ class SupportRequestBase(BaseModel):
     hub_id: str
     badge_id: Optional[str] = None
     description: str
+    status: Optional[str] = None
 
 
 class SupportRequestCreate(SupportRequestBase):
@@ -80,3 +81,9 @@ class SupportMessageOut(SupportMessageBase):
 
     class Config:
         orm_mode = True
+
+
+class DifyReply(BaseModel):
+    ticket_id: int
+    answer: str
+    status: Optional[str] = None

@@ -10,6 +10,9 @@ load_dotenv()
 # иначе BOT_TOKEN (как в текущем .env)
 API_TOKEN = os.getenv("API_TOKEN") or os.getenv("BOT_TOKEN")
 
+# Dify webhook / API endpoint for support tickets
+DIFY_WEBHOOK_URL = os.getenv("DIFY_WEBHOOK_URL")
+
 SFTP_HOST = os.getenv("SFTP_HOST")
 SFTP_PORT = int(os.getenv("SFTP_PORT")) if os.getenv("SFTP_PORT") is not None else None
 SFTP_USER = os.getenv("SFTP_USER")
@@ -29,7 +32,13 @@ class Settings(BaseSettings):
     BOT_TOKEN: Optional[str] = None
     media_path: Optional[str] = None
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
-   
+
+    # Параметры интеграции с Dify Workflow API
+    DIFY_BASE_URL: str = "https://dify.ai.yadro.com"
+    DIFY_WORKFLOW_ID: Optional[str] = None
+    DIFY_API_KEY: Optional[str] = None
+    DIFY_RESPONSE_MODE: str = "blocking"  # или "streaming"
+
     # Игнорируем лишние переменные из .env (mqtt_*, sftp_*, admin и т.п.)
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

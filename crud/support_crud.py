@@ -17,6 +17,7 @@ async def create_support_request(
     hub_id: str,
     badge_id: Optional[str],
     description: str,
+    status: str = "open",
 ) -> models.SupportRequest:
     request = models.SupportRequest(
         user_id=user_id,
@@ -24,6 +25,7 @@ async def create_support_request(
         hub_id=hub_id,
         badge_id=badge_id,
         description=description,
+        status=status,
     )
     db.add(request)
     await db.commit()

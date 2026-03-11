@@ -37,6 +37,7 @@ class SupportRequest(Base):
     badge_id = Column(String(255), nullable=True)
     description = Column(Text, nullable=False)
     date = Column(DateTime, default=datetime.utcnow)
+    status = Column(String(50), default="open", nullable=False)  # open, in_progress, resolved, closed
 
     user = relationship("User", back_populates="support_requests")
     messages = relationship("SupportMessage", back_populates="request", cascade="all, delete-orphan")
